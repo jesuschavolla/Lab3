@@ -2,6 +2,7 @@
 
 #include "p24fj64ga002.h"
 #include "ADC.h"
+#include "LCD.h"
 // ******************************************************************************************* //
 
 void InADC(){
@@ -26,10 +27,12 @@ int AnalogtoDigital(){//function that returns the digital value
     AD1CON1bits.SAMP = 1;// start sampling, automatic conversion will follow
 
 // wait to complete the sampling and then return value
-    if(AD1CON1bits.DONE==1){
-    ADC=ADC1BUF0;
+    while(AD1CON1bits.DONE!=1);
+   
+    AD1CON1bits.DONE=0;
+     ADC=ADC1BUF0;
     return(ADC);
-    }
+    
 
 
 };

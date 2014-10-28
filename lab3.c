@@ -38,9 +38,16 @@ _CONFIG2( IESO_OFF & SOSCSEL_SOSC & WUTSEL_LEG & FNOSC_PRIPLL & FCKSM_CSDCMD & O
 // ******************************************************************************************* //
 int main(void)
 {
+    int state=0;
+    int checking=0;
+    int value=0;
     InADC();
     InPWM();
     while(1){
-        
+
+//       value=AnalogtoDigital();
+//       LCDClear();
+//       LCDMoveCursor(0,0);
+//       LCDPrintChar('value');
     }
 }
