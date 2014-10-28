@@ -4,7 +4,7 @@
 #include "ADC.h"
 // ******************************************************************************************* //
 
-void InitADC(){
+void InADC(){
 
     AD1PCFG= 0xFFDF;// select analog input pins//0b1111111111011111 ch5 Jp 5 is connected internally
     AD1CON1 = 0x00E4;   //111 = Internal counter ends sampling and starts conversion (auto-convert)
