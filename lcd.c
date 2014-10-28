@@ -279,6 +279,7 @@ void LCDPrintChar(char c) {
     WriteLCD(c,1,40);
 }
 
+
 // ******************************************************************************************* //
 
 // LCDPrintString will print a null-terminated string to the LCD at the current cursor

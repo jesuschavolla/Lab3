@@ -1,4 +1,4 @@
 ////////////////////////////////////////////////////////////////
 void InPWM();
-void MoveRobot(int state);
+void MoveRobot(int state, int checking);
 
