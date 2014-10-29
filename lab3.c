@@ -42,10 +42,12 @@ int main(void)
     int checking=0;
     int value=0;
     char ADV[8];
+    float percentage;
+    char duty[8];
      LCDInitialize();
     InADC();
     InPWM();
-    
+
    
     while(1){
 
@@ -54,11 +56,21 @@ int main(void)
       value = AnalogtoDigital();
       sprintf(ADV,"%6d", value);
        LCDClear();
-      while(PORTBbits.RB5==0)
-      {
+      //while(PORTBbits.RB5==0)
+      //{
         LCDMoveCursor(0,0);
        LCDPrintString(ADV);
-      }
+      // OC1RS = (1474 - (1474*(value-511)/511));
+      // OC2RS = ((1474*value)/511);
+       
+       OC1RS = 1023 - value;
+       OC2RS = value;
+//       if(value >= 506 && value <= 516){
+//           OC1RS = 1474;
+//           OC2RS = 1474;
+//           percentage=OC1RS/1474;
+//       }
+      //}
        
     }
 }

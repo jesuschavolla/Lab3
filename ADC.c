@@ -8,10 +8,12 @@
 void InADC(){
 
     AD1PCFG&= 0xFFFE;// select analog input pins//0b1111111111011111 ch5 Jp 5 is connected internally
-    AD1CON1 = 0x00E0;   //111 = Internal counter ends sampling and starts conversion (auto-convert)
-                        //  Auto converting after end of sampling
-    AD1CON2 = 0x0000;
-    AD1CON3 = 0x1F01;  // sample time = 31Tad, Tad = 2*Tcy = 125 ns
+    //AD1CON1 = 0x00E0;   //111 = Internal counter ends sampling and starts conversion (auto-convert)
+      AD1CON1 =0x20E4;                  //  Auto converting after end of sampling
+      AD1CON2 = 0x003C;
+      AD1CON3 = 0x0D01;
+      //AD1CON2 = 0x0000;
+    //AD1CON3 = 0x1F01;  // sample time = 31Tad, Tad = 2*Tcy = 125 ns
 
     AD1CSSL = 0x0000;        // no scanning
     AD1CHS = 0x0000;             //Configure input channels,
