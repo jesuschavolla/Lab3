@@ -11,10 +11,12 @@
 
 void InPWM(){
 
-    RPOR1bits.RP2R = 0; //  output pins
-    RPOR1bits.RP3R = 0;
 
-    PR3 = 1474;
+
+        RPOR1bits.RP2R = 18; //  output pins
+        RPOR5bits.RP11R = 19;
+
+    PR3 = 512;
     T3CON = 0x8000;
 
     OC1CON = 0x000E;
@@ -24,7 +26,7 @@ void InPWM(){
     OC2CON = 0x000E;
     OC2R = 0;
     OC2RS = 0;
-    return 0;
+    
 }
 
 

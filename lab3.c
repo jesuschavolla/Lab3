@@ -37,47 +37,63 @@ _CONFIG2(POSCMOD_NONE & I2C1SEL_PRI & IOL1WAY_ON & OSCIOFNC_OFF & FCKSM_CSDCMD &
 int main(void)
 {
     TRISBbits.TRISB5=1;
+
     int i=0;
     int state=0;
     int checking=0;
     int value=0;
-    char ADV[8];
-    float percentage;
-    char duty[8];
+    char ADV[4];
+    char ADV2[4];
+    char ADV3[4];
+//    float percentage;
+//    char duty[8];
      LCDInitialize();
     InADC();
     InPWM();
 
+//        RPOR1bits.RP2R = 18; //  output pins
+//        RPOR5bits.RP11R = 19;
+       // RPOR5bits.RP10R = 0;
+        LATBbits.LATB10=0;
+        LATBbits.LATB9= 1;
+        LATBbits.LATB3=0;
+        LATBbits.LATB8= 1;
+
+        
    
     while(1){
+
+        // if(PORTBbits.RB5 == 0){
+        //   }
 
         LCDClear();
 
       value = AnalogtoDigital();
-      sprintf(ADV,"%6d", value);
-       LCDClear();
+      LCDMoveCursor(0,0);
+      sprintf(ADV,"%4d", value);
+       //LCDClear();
       //while(PORTBbits.RB5==0)
       //{
-        LCDMoveCursor(0,0);
+      
        LCDPrintString(ADV);
       // OC1RS = (1474 - (1474*(value-511)/511));
       // OC2RS = ((1474*value)/511);
        
        OC1RS = 1023 - value;
+
+       
+       sprintf(ADV2,"%4d", OC1RS);
        LCDMoveCursor(1,0);
-       sprintf(ADV,"%6d", OC1RS);
-       LCDPrintString(ADV);
+
+       LCDPrintString(ADV2);
 
        OC2RS = value;
-       LCDMoveCursor(1,3);
-       sprintf(ADV,"%6d", OC2RS);
-       LCDPrintString(ADV);
-//       if(value >= 506 && value <= 516){
-//           OC1RS = 1474;
-//           OC2RS = 1474;
-//           percentage=OC1RS/1474;
-//       }
-      //}
-       
+      
+       sprintf(ADV3,"%4d",OC2RS);
+        LCDMoveCursor(1,4);
+       LCDPrintString(ADV3);
+
+       for(i=0;i<20000; i++);
+      
     }
 }
