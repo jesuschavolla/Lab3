@@ -43,10 +43,10 @@ void DelayUs(unsigned int usDelay) {
 	// one microsecond delay, and multiply this by the input variable.
 	// Be sure to user integer values only.
 /**********************************************/
-    TMR2 = 0;
-    T2CON = 0x8010;
+    TMR1 = 0;
+    T1CON = 0x8010;
     
-    while(TMR2 < (1*usDelay));
+    while(TMR1 < (1*usDelay));
 
     
 
