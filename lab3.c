@@ -45,15 +45,14 @@ CNEN2bits.CN27IE = 1;
 
     int i=0;
     state=0;
-    int checking=0;
-    int press=0;
-    int value=0;
-    float convert=0;
+
+   
+   int value=0;
+    double convert=0;
     char ADV[4];
     char ADV2[4];
-    char ADV3[4];
-//    float percentage;
-//    char duty[8];
+    
+
      LCDInitialize();
     InADC();
     InPWM();
@@ -70,55 +69,56 @@ CNEN2bits.CN27IE = 1;
          LCDMoveCursor(0,0);
           sprintf(ADV,"%4d", value);
           LCDPrintString(ADV);
-//
-//          if(state==0){
-        OC1RS = 1023- value;
-       OC2RS = value;
-          sprintf(ADV2,"%4d", OC1RS);
+
+        if(state==0 | state==2){
+        
           LCDMoveCursor(1,0);
-          LCDPrintString(ADV2);
-       sprintf(ADV3,"%4d",OC2RS);
+          LCDPrintString("0");
         LCDMoveCursor(1,4);
-       LCDPrintString(ADV3);
-//
-//          }
-//        else if((state==1) |(state==2)){
-//       OC1RS = 1023- value;
-//       OC2RS = value;
-//
-//            if(OC1RS>513 && OC2RS<511){
-//
-//            convert=(OC2RS/511)*100;
-//            sprintf(ADV2,"%3d", (int)(convert));
-//            LCDMoveCursor(1,0);
-//            LCDPrintString(ADV2);
-//
-//
-//             LCDMoveCursor(1,4);
-//            LCDPrintString("100");
-//            }
-//
-//            else if(OC1RS<510 && OC2RS>513){
-//
-//            LCDMoveCursor(1,0);
-//            LCDPrintString("100");
-//
-//            convert=(OC1RS/511)*100;
-//            sprintf(ADV2,"%3d", (int)(convert));
-//            LCDMoveCursor(1,4);
-//            LCDPrintString(ADV2);
-//            }
-//
-//            else{
-//            LCDMoveCursor(1,0);
-//            LCDPrintString("100");
-//            LCDMoveCursor(1,4);
-//            LCDPrintString("100");
-//            }
-//
-//
-//       }
-//
+       LCDPrintString("0");
+
+        }
+        else if((state==1) |(state==2)){
+       OC1RS = 1023- value;
+       OC2RS = value;
+
+            if(OC1RS>513 && OC2RS<511){
+
+            convert=(OC2RS*100)/511;
+           
+            sprintf(ADV2,"%3.0f",convert);
+            LCDMoveCursor(1,0);
+            LCDPrintString(ADV2);
+
+
+             LCDMoveCursor(1,4);
+            LCDPrintString("100");
+            }
+
+            else if(OC1RS<510 && OC2RS>513){
+
+            LCDMoveCursor(1,0);
+            LCDPrintString("100");
+
+            convert=(OC1RS*100)/511;
+         
+
+            sprintf(ADV2,"%3.0f",convert);
+            
+            LCDMoveCursor(1,4);
+            LCDPrintString(ADV2);
+            }
+
+            else{
+            LCDMoveCursor(1,0);
+            LCDPrintString("100");
+            LCDMoveCursor(1,4);
+            LCDPrintString("100");
+            }
+
+
+       }
+
       
 
        for(i=0;i<20000; i++);
