@@ -34,19 +34,17 @@ _CONFIG2(POSCMOD_NONE & I2C1SEL_PRI & IOL1WAY_ON & OSCIOFNC_OFF & FCKSM_CSDCMD &
 // ******************************************************************************************* //
 
 // ******************************************************************************************* //
+volatile unsigned int state;
 int main(void)
 {
     TRISBbits.TRISB5=1;
-//    TRISBbits.TRISB8 = 0;
-   
-//    TRISBbits.TRISB10 = 0;
-//    TRISBbits.TRISB3 = 0;
-////
-//    LATBbits.LATB10 = 1;
-//    LATBbits.LATB3 = 1;
+CNEN2bits.CN27IE = 1;
+    IFS1bits.CNIF = 0;
+    IEC1bits.CNIE = 1;
+
 
     int i=0;
-    int state=0;
+    state=0;
     int checking=0;
     int press=0;
     int value=0;
@@ -59,26 +57,14 @@ int main(void)
      LCDInitialize();
     InADC();
     InPWM();
-
-
-
-
-            RPOR1bits.RP3R= 18;
-            RPOR1bits.RP2R = 0;
-            RPOR0bits.RP0R = 19;
-            RPOR0bits.RP1R = 0;
-
-   
+ 
    
     while(1){
 
-//        if(PORTBbits.RB5 == 0){
-//            press=1;
-//         }
-//
-//        if(press==1){
-//           MoveRobot(state,checking) ;
-//        }
+      
+
+          MoveRobot(state);
+        
        LCDClear();
          value = AnalogtoDigital();
          LCDMoveCursor(0,0);
@@ -141,3 +127,20 @@ int main(void)
       
     }
 }
+    void __attribute__((interrupt, auto_psv)) _CNInterrupt(void) {
+        while(PORTBbits.RB5==0);
+        if(PORTBbits.RB5==1)
+            state++;
+
+        if(state==4)
+            state=0;
+
+//        MoveRobot(state);
+
+
+
+
+        IFS1bits.CNIF = 0;
+
+    }
+

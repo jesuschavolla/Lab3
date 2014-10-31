@@ -35,7 +35,7 @@ void InPWM(){
 // ******************************************************************************************* //
 
 
-void MoveRobot(int state, int checking){
+void MoveRobot(int state){
     //19 output compare 2
     //18 output compare 1
     //0  output  "NULL"
@@ -61,7 +61,7 @@ void MoveRobot(int state, int checking){
         
     }
       //idle mode
-    if(state ==2)
+    else if(state ==2)
     {
             RPOR1bits.RP3R= 0;
             RPOR1bits.RP2R = 0;
