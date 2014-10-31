@@ -48,7 +48,9 @@ int main(void)
     int i=0;
     int state=0;
     int checking=0;
+    int press=0;
     int value=0;
+    float convert=0;
     char ADV[4];
     char ADV2[4];
     char ADV3[4];
@@ -60,44 +62,78 @@ int main(void)
 
 
 
-     RPOR1bits.RP2R= 0;
-     RPOR2bits.RP5R = 0;
-     RPOR1bits.RP3R = 18;//pot >> right
-     RPOR5bits.RP10R = 19;//pot >> left
 
-    
+            RPOR1bits.RP3R= 18;
+            RPOR1bits.RP2R = 0;
+            RPOR0bits.RP0R = 19;
+            RPOR0bits.RP1R = 0;
+
+   
    
     while(1){
 
-        // if(PORTBbits.RB5 == 0){
-        //   }
-
-        LCDClear();
-
-      value = AnalogtoDigital();
-      LCDMoveCursor(0,0);
-      sprintf(ADV,"%4d", value);
-       //LCDClear();
-      //while(PORTBbits.RB5==0)
-      //{
-      
-       LCDPrintString(ADV);
-      // OC1RS = (1474 - (1474*(value-511)/511));
-      // OC2RS = ((1474*value)/511);
-       
-       OC1RS = 1023- value;
-
-       
-       sprintf(ADV2,"%4d", OC1RS);
-       LCDMoveCursor(1,0);
-
-       LCDPrintString(ADV2);
-
+//        if(PORTBbits.RB5 == 0){
+//            press=1;
+//         }
+//
+//        if(press==1){
+//           MoveRobot(state,checking) ;
+//        }
+       LCDClear();
+         value = AnalogtoDigital();
+         LCDMoveCursor(0,0);
+          sprintf(ADV,"%4d", value);
+          LCDPrintString(ADV);
+//
+//          if(state==0){
+        OC1RS = 1023- value;
        OC2RS = value;
-      
+          sprintf(ADV2,"%4d", OC1RS);
+          LCDMoveCursor(1,0);
+          LCDPrintString(ADV2);
        sprintf(ADV3,"%4d",OC2RS);
         LCDMoveCursor(1,4);
        LCDPrintString(ADV3);
+//
+//          }
+//        else if((state==1) |(state==2)){
+//       OC1RS = 1023- value;
+//       OC2RS = value;
+//
+//            if(OC1RS>513 && OC2RS<511){
+//
+//            convert=(OC2RS/511)*100;
+//            sprintf(ADV2,"%3d", (int)(convert));
+//            LCDMoveCursor(1,0);
+//            LCDPrintString(ADV2);
+//
+//
+//             LCDMoveCursor(1,4);
+//            LCDPrintString("100");
+//            }
+//
+//            else if(OC1RS<510 && OC2RS>513){
+//
+//            LCDMoveCursor(1,0);
+//            LCDPrintString("100");
+//
+//            convert=(OC1RS/511)*100;
+//            sprintf(ADV2,"%3d", (int)(convert));
+//            LCDMoveCursor(1,4);
+//            LCDPrintString(ADV2);
+//            }
+//
+//            else{
+//            LCDMoveCursor(1,0);
+//            LCDPrintString("100");
+//            LCDMoveCursor(1,4);
+//            LCDPrintString("100");
+//            }
+//
+//
+//       }
+//
+      
 
        for(i=0;i<20000; i++);
     
